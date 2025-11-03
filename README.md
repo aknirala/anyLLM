@@ -18,6 +18,10 @@ The core idea is to use two distinct Large Language Models (LLMs) in a pipeline:
 
 To achieve this goal, the project will be developed in stages, starting with a foundational piece of the user interface.
 
-- **Current Step:** [MVP0: Simple JSON File Editor](./MVP0.md)
+- **Completed:** [MVP_0: Simple JSON File Editor](./MVP_0.md)
 
 The first milestone is to build a simple web-based tool for browsing and editing structured text files (JSON). This will serve as a basis for the user-facing part of the application.
+
+- **Current:** [MVP_1: Complete Functionality](./MVP_1.md)
+
+It is the first complete functionality.
