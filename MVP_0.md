@@ -2,7 +2,7 @@
 
 This document outlines the requirements for the first Minimum Viable Product (MVP), a simple web-based editor for JSON files.
 
-The landing page is anyLLM_0.html
+The landing page is anyLLM.html
 
 ## Core Features
 

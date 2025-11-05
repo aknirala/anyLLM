@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>anyLLM</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <style>
+            body,
+            html {
+                height: 100%;
+            }
+            .main-container {
+                display: flex;
+                height: 100%;
+            }
+            .side-pane {
+                width: 25%;
+                padding: 1rem;
+                border-right: 1px solid #dee2e6;
+                overflow-y: auto;
+            }
+            .main-pane {
+                width: 75%;
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+            }
+            .conversation-list {
+                list-style: none;
+                padding: 0;
+            }
+            .conversation-list-item {
+                padding: 0.5rem;
+                cursor: pointer;
+            }
+            .conversation-list-item:hover {
+                background-color: #f8f9fa;
+            }
+            .llm-selection {
+                margin-bottom: 1rem;
+            }
+            .chat-interface {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            .chat-messages {
+                flex-grow: 1;
+                overflow-y: auto;
+                border: 1px solid #dee2e6;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            .chat-input {
+                display: flex;
+            }
+            .chat-input textarea {
+                flex-grow: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="side-pane">
+                <h2>Conversations</h2>
+                <ul id="conversation-list" class="conversation-list"></ul>
+                <h2>Files</h2>
+                <ul id="file-list"></ul>
+            </div>
+            <div class="main-pane">
+                <div class="llm-selection">
+                    <div class="accordion" id="llm-selection-accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="llm-selection-heading">
+                                <button
+                                    class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#llm-selection-collapse"
+                                    aria-expanded="true"
+                                    aria-controls="llm-selection-collapse"
+                                >
+                                    LLM Selection
+                                    <div id="llm-selection-display" class="ms-2"></div>
+                                </button>
+                            </h2>
+                            <div id="llm-selection-collapse" class="accordion-collapse collapse show" aria-labelledby="llm-selection-heading" data-bs-parent="#llm-selection-accordion">
+                                <div class="accordion-body">
+                                    <div class="mb-3">
+                                        <button id="folder-picker-btn" class="btn btn-secondary">Select Conversation Folder</button>
+                                    </div>
+                                    <hr />
+                                    <h5>Primary LLM</h5>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <select id="primary-llm" class="form-select">
+                                                <option selected>Choose...</option>
+                                                <option value="gpt">GPT</option>
+                                                <option value="gemini">Gemini</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" id="primary-llm-key" class="form-control" placeholder="API Key" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea id="primary-llm-prompt" class="form-control" rows="3" placeholder="System Prompt"></textarea>
+                                    </div>
+                                    <hr />
+                                    <h5>Secondary LLM</h5>
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <select id="secondary-llm" class="form-select">
+                                                <option selected>Choose...</option>
+                                                <option value="gpt">GPT</option>
+                                                <option value="gemini">Gemini</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" id="secondary-llm-key" class="form-control" placeholder="API Key" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea id="secondary-llm-prompt" class="form-control" rows="3" placeholder="System Prompt"></textarea>
+                                    </div>
+                                    <button id="save-settings" class="btn btn-primary">Save Settings</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-interface">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Chat messages will be appended here -->
+                    </div>
+                    <div class="chat-input">
+                        <textarea class="form-control" placeholder="Type your message..."></textarea>
+                        <button class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="anyLLM.js"></script>
+    </body>
+</html>
