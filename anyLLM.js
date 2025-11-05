@@ -79,9 +79,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let folderHandle;
+  let currentConversation;
+
+  window.getFolderHandle = () => {
+    return folderHandle;
+  };
+
+  window.getCurrentConversation = () => {
+    return currentConversation;
+  };
+
+  window.setCurrentConversation = (conversation) => {
+    currentConversation = conversation;
+  };
 
   async function loadFolder(handle) {
     folderHandle = handle;
+    currentConversation = null; // Clear current conversation
     fileList.innerHTML = ""; // Clear the file list
     const jsonFiles = [];
 
@@ -90,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       listItem.textContent = entry.name;
       fileList.appendChild(listItem);
 
-      if (entry.kind === "file" && entry.name.endsWith(".json") && entry.name !== "models.json") {
+      if (entry.kind === "file" && entry.name.endsWith(".json") && entry.name !== "model.json") {
         const file = await entry.getFile();
         const content = await file.text();
         const data = JSON.parse(content);
@@ -98,11 +112,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Sort files by last_m_time in descending order
-    jsonFiles.sort((a, b) => b.last_m_time - a.last_m_time);
+    // Sort files by last_modified_time in descending order
+    jsonFiles.sort((a, b) => new Date(b.last_modified_time) - new Date(a.last_modified_time));
 
     // Clear the conversation list
     conversationList.innerHTML = "";
+
+    // Populate the conversation list
+    jsonFiles.forEach((fileData) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = fileData.fileName;
+      listItem.classList.add("conversation-list-item");
+      listItem.addEventListener("click", () => {
+        window.loadConversation(fileData);
+      });
+      conversationList.appendChild(listItem);
+    });
 
     // Load settings from model.json if it exists
     try {
